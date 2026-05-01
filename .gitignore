@@ -1,0 +1,15 @@
+# Python Cache
+__pycache__/
+
+# Enviroment Variables
+*.env
+
+# VS Code
+.vscode/
+
+# Powershell Scripts
+*.ps1
+
+# SQLite Databases
+*.db
+

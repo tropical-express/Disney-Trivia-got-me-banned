@@ -1,0 +1,46 @@
+services:
+
+  api:
+    build: ./backend
+    container_name: disney-trivia-got-me-banned
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  scraper:
+    build: ./backend
+    container_name: disney-trivia-got-me-banned-backend
+    command: python scraper.py
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: disney-trivia-got-me-banned-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+
+volumes:
+  portainer_data:
